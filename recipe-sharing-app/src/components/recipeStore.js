@@ -49,15 +49,6 @@ export const useRecipeStore = create((set, get) => ({
     });
   },
 
-  setRecipes: (recipes) => {
-    const { searchTerm, favorites } = get();
-    set({
-      recipes,
-      filteredRecipes: computeFiltered(recipes, searchTerm),
-      recommendations: computeRecommendations(recipes, favorites || []),
-    });
-  },
-
   updateRecipe: (updated) => {
     const { recipes, searchTerm, favorites } = get();
     const next = recipes.map((r) => (r.id === updated.id ? updated : r));
@@ -90,9 +81,7 @@ export const useRecipeStore = create((set, get) => ({
 
   filterRecipes: () => {
     const { recipes, searchTerm } = get();
-    set({
-      filteredRecipes: computeFiltered(recipes, searchTerm),
-    });
+    set({ filteredRecipes: computeFiltered(recipes, searchTerm) });
   },
 
   addFavorite: (recipeId) => {
