@@ -16,7 +16,6 @@ function App() {
   return (
     <BrowserRouter>
       <div style={{ maxWidth: 720, margin: '0 auto', padding: 16 }}>
-        <h1>Recipe Sharing App</h1>
         <Routes>
           <Route
             path="/"
@@ -25,7 +24,6 @@ function App() {
                 <h1>Recipe Sharing App</h1>
                 <SearchBar />
                 <AddRecipeForm />
-                <RecommendationsList />
                 <FavoritesList />
                 <RecipeList />
               </>
