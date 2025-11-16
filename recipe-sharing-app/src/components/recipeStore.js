@@ -36,6 +36,8 @@ export const useRecipeStore = create((set, get) => ({
   recipes: [],
   searchTerm: '',
   filteredRecipes: [],
+  favorites: [],
+  recommendations: [],
 
   addRecipe: (newRecipe) => {
     const { recipes, searchTerm, favorites } = get();
@@ -93,9 +95,6 @@ export const useRecipeStore = create((set, get) => ({
     });
   },
 
-  // Favorites and recommendations
-  favorites: [],
-  recommendations: [],
   addFavorite: (recipeId) => {
     const { favorites, recipes } = get();
     if ((favorites || []).includes(recipeId)) return;
@@ -105,6 +104,7 @@ export const useRecipeStore = create((set, get) => ({
       recommendations: computeRecommendations(recipes, nextFavs),
     });
   },
+
   removeFavorite: (recipeId) => {
     const { favorites, recipes } = get();
     const nextFavs = (favorites || []).filter((fid) => fid !== recipeId);
@@ -113,6 +113,7 @@ export const useRecipeStore = create((set, get) => ({
       recommendations: computeRecommendations(recipes, nextFavs),
     });
   },
+
   generateRecommendations: () => {
     const { recipes, favorites } = get();
     set({ recommendations: computeRecommendations(recipes, favorites || []) });

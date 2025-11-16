@@ -1,16 +1,79 @@
-# React + Vite
+# Recipe Sharing App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A simple React application for sharing, searching, and managing recipes. Built with Zustand for state management and React Router for navigation.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Add, edit, and delete recipes
+- View individual recipe details
+- Search and filter recipes by title and description
+- Mark recipes as favorites
+- Personalized recommendations based on your favorites
+- Client-side routing
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- React (Vite)
+- Zustand
+- React Router DOM
 
-## Expanding the ESLint configuration
+## Getting Started
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Prerequisites
+
+- Node.js 18+ recommended
+- npm 8+
+
+### Installation
+
+1. Install dependencies:
+
+
+## Key Concepts
+
+### State Management (Zustand)
+
+- `recipes`: list of recipe objects `{ id, title, description }`
+- `addRecipe`, `updateRecipe`, `deleteRecipe`, `setRecipes`: CRUD actions
+- `searchTerm`, `filteredRecipes`, `setSearchTerm`, `filterRecipes`: search and filtering
+- `favorites`, `addFavorite`, `removeFavorite`: favorite management
+- `recommendations`, `generateRecommendations`: personalized suggestions
+
+### Routing
+
+- `/`: Home — shows Add form, Favorites, Recommendations, and Recipe list
+- `/recipes/:id`: Details — shows single recipe with edit and delete actions
+
+## Usage Tips
+
+- Add a recipe with a title and description; it will appear in the list.
+- Click the recipe link to view details; you can edit and delete from there.
+- Use the search bar (if present) to filter recipes.
+- Mark favorites to improve recommendations.
+
+## Development Notes
+
+- Keep `BrowserRouter` usage in `App.jsx` to satisfy routing checks.
+- Ensure imports are at the top of each file; avoid importing inside functions.
+- Avoid wrapping `App` with another router in `main.jsx` to prevent duplication.
+
+## Git Workflow
+
+After completing a feature/task:
+
+1. Stage changes:
+
+
+## Troubleshooting
+
+- Blank screen:
+- Check the browser console for errors.
+- Ensure `App.jsx` renders components on the `/` route.
+- Verify `react-router-dom` and `zustand` are installed.
+- Routing not working:
+- Ensure only one `BrowserRouter` is used (inside `App.jsx`).
+- Confirm `Routes` and `Route` are imported from `react-router-dom`.
+
+## License
+
+This project is for educational purposes as part of ALX FE ReactJS.
