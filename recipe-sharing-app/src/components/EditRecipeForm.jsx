@@ -14,8 +14,8 @@ const EditRecipeForm = ({ recipeId }) => {
     }
   }, [recipe]);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = (event) => {
+    event.preventDefault();
     if (!recipe) return;
     const updated = { ...recipe, title: title.trim(), description: description.trim() };
     updateRecipe(updated);
