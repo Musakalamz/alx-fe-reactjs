@@ -1,11 +1,11 @@
-import create from 'zustand';
+import create from "zustand";
 
 const computeFiltered = (recipes, term) => {
-  const q = (term || '').trim().toLowerCase();
+  const q = (term || "").trim().toLowerCase();
   if (!q) return recipes;
   return recipes.filter((r) => {
-    const title = (r.title || '').toLowerCase();
-    const description = (r.description || '').toLowerCase();
+    const title = (r.title || "").toLowerCase();
+    const description = (r.description || "").toLowerCase();
     return title.includes(q) || description.includes(q);
   });
 };
@@ -15,15 +15,25 @@ const computeRecommendations = (recipes, favorites) => {
   const favSet = new Set(favorites);
   const favText = recipes
     .filter((r) => favSet.has(r.id))
-    .map((r) => `${(r.title || '').toLowerCase()} ${(r.description || '').toLowerCase()}`)
-    .join(' ');
+    .map(
+      (r) =>
+        `${(r.title || "").toLowerCase()} ${(
+          r.description || ""
+        ).toLowerCase()}`
+    )
+    .join(" ");
   const tokens = new Set(favText.split(/\W+/).filter((t) => t.length > 2));
 
   return recipes
     .filter((r) => !favSet.has(r.id))
     .map((r) => {
-      const text = `${(r.title || '').toLowerCase()} ${(r.description || '').toLowerCase()}`;
-      const score = [...tokens].reduce((acc, t) => (text.includes(t) ? acc + 1 : acc), 0);
+      const text = `${(r.title || "").toLowerCase()} ${(
+        r.description || ""
+      ).toLowerCase()}`;
+      const score = [...tokens].reduce(
+        (acc, t) => (text.includes(t) ? acc + 1 : acc),
+        0
+      );
       return { recipe: r, score };
     })
     .filter((x) => x.score > 0)
@@ -32,9 +42,9 @@ const computeRecommendations = (recipes, favorites) => {
     .map((x) => x.recipe);
 };
 
-export const useRecipeStore = create((set, get) => ({
+export const useRecipeStore = create((set) => ({
   recipes: [],
-  searchTerm: '',
+  searchTerm: "",
   filteredRecipes: [],
   favorites: [],
   recommendations: [],
@@ -107,4 +117,5 @@ export const useRecipeStore = create((set, get) => ({
     const { recipes, favorites } = get();
     set({ recommendations: computeRecommendations(recipes, favorites || []) });
   },
+  setRecipes: (recipes) => set({ recipes }),
 }));
