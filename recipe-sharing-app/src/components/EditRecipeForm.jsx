@@ -2,9 +2,8 @@ import { useState, useEffect } from 'react';
 import { useRecipeStore } from './recipeStore';
 
 const EditRecipeForm = ({ recipeId }) => {
-  const recipe = useRecipeStore((state) => state.recipes.find((r) => r.id === recipeId));
-  const updateRecipe = useRecipeStore((state) => state.updateRecipe);
-
+  const recipe = useRecipeStore((s) => s.recipes.find((r) => r.id === recipeId));
+  const updateRecipe = useRecipeStore((s) => s.updateRecipe);
   const [title, setTitle] = useState(recipe ? recipe.title : '');
   const [description, setDescription] = useState(recipe ? recipe.description : '');
 
@@ -15,16 +14,14 @@ const EditRecipeForm = ({ recipeId }) => {
     }
   }, [recipe]);
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  const handleSubmit = (e) => {
+    e.preventDefault();
     if (!recipe) return;
     const updated = { ...recipe, title: title.trim(), description: description.trim() };
     updateRecipe(updated);
   };
 
-  if (!recipe) {
-    return <p>Cannot edit: recipe not found.</p>;
-  }
+  if (!recipe) return <p>Cannot edit: recipe not found.</p>;
 
   return (
     <form onSubmit={handleSubmit} style={{ marginBottom: 16 }}>

@@ -3,12 +3,11 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useRecipeStore } from './recipeStore';
 import EditRecipeForm from './EditRecipeForm';
 import DeleteRecipeButton from './DeleteRecipeButton';
-import FavoriteToggleButton from './FavoriteToggleButton';
 
 const RecipeDetails = () => {
   const { id } = useParams();
   const recipeId = useMemo(() => Number(id), [id]);
-  const recipe = useRecipeStore((state) => state.recipes.find((r) => r.id === recipeId));
+  const recipe = useRecipeStore((s) => s.recipes.find((r) => r.id === recipeId));
   const navigate = useNavigate();
 
   if (!recipe) {
@@ -24,16 +23,12 @@ const RecipeDetails = () => {
     <div>
       <h1 style={{ marginBottom: 8 }}>{recipe.title}</h1>
       <p style={{ marginBottom: 16 }}>{recipe.description}</p>
-      <FavoriteToggleButton recipeId={recipeId} />
 
       <h2>Edit Recipe</h2>
       <EditRecipeForm recipeId={recipeId} />
 
       <div style={{ marginTop: 16 }}>
-        <DeleteRecipeButton
-          recipeId={recipeId}
-          onDeleted={() => navigate('/')}
-        />
+        <DeleteRecipeButton recipeId={recipeId} onDeleted={() => navigate('/')} />
       </div>
 
       <div style={{ marginTop: 16 }}>
