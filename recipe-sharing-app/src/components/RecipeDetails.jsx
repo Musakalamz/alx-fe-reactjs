@@ -22,6 +22,7 @@ const RecipeDetails = () => {
   return (
     <div>
       <h1 style={{ marginBottom: 8 }}>{recipe.title}</h1>
+      <p style={{ marginBottom: 8 }}><strong>ID:</strong> {recipe.id}</p>
       <p style={{ marginBottom: 16 }}>{recipe.description}</p>
 
       <h2>Edit Recipe</h2>

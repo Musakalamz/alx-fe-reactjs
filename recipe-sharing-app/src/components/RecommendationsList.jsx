@@ -1,7 +1,14 @@
 import { useRecipeStore } from './recipeStore';
 
-const RecommendationsList = () => {
-  const recommendations = useRecipeStore((state) => state.recommendations);
+function RecommendationsList() {
+  const recommendations = useRecipeStore((s) => s.recommendations || []);
+  const favorites = useRecipeStore((s) => s.favorites || []);
+  const recipes = useRecipeStore((s) => s.recipes);
+  const generateRecommendations = useRecipeStore((s) => s.generateRecommendations);
+
+  useEffect(() => {
+    generateRecommendations();
+  }, [favorites, recipes, generateRecommendations]);
 
   return (
     <div>

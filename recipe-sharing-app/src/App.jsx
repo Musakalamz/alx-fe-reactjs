@@ -2,8 +2,8 @@ import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import SearchBar from './components/SearchBar';
 import AddRecipeForm from './components/AddRecipeForm';
 import RecipeList from './components/RecipeList';
 import RecipeDetails from './components/RecipeDetails';
@@ -11,8 +11,6 @@ import FavoritesList from './components/FavoritesList';
 import RecommendationsList from './components/RecommendationsList';
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <BrowserRouter>
       <div style={{ maxWidth: 720, margin: '0 auto', padding: 16 }}>
@@ -22,9 +20,9 @@ function App() {
             element={
               <>
                 <h1>Recipe Sharing App</h1>
-                <SearchBar />
                 <AddRecipeForm />
                 <FavoritesList />
+                <RecommendationsList />
                 <RecipeList />
               </>
             }
@@ -33,7 +31,7 @@ function App() {
         </Routes>
       </div>
     </BrowserRouter>
-  )
+  );
 }
 
-export default App
+export default App;
