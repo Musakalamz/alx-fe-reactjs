@@ -1,8 +1,8 @@
 import { useRecipeStore } from './recipeStore';
 
 const SearchBar = () => {
-  const searchTerm = useRecipeStore((state) => state.searchTerm);
-  const setSearchTerm = useRecipeStore((state) => state.setSearchTerm);
+  const searchTerm = useRecipeStore((s) => s.searchTerm);
+  const setSearchTerm = useRecipeStore((s) => s.setSearchTerm);
 
   return (
     <input
