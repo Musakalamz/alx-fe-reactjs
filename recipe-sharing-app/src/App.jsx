@@ -17,8 +17,6 @@ function App() {
               <>
                 <h1>Recipe Sharing App</h1>
                 <AddRecipeForm />
-                <FavoritesList />
-                <RecommendationsList />
                 <RecipeList />
               </>
             }

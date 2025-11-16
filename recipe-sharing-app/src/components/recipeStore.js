@@ -42,45 +42,54 @@ const computeRecommendations = (recipes, favorites) => {
     .map((x) => x.recipe);
 };
 
-export const useRecipeStore = create((set) => ({
+export const useRecipeStore = create((set, get) => ({
+  // Base state
   recipes: [],
   searchTerm: "",
   filteredRecipes: [],
   favorites: [],
   recommendations: [],
 
+  // CRUD
   addRecipe: (newRecipe) => {
     const { recipes, searchTerm, favorites } = get();
     const next = [...recipes, newRecipe];
     set({
       recipes: next,
       filteredRecipes: computeFiltered(next, searchTerm),
-      recommendations: computeRecommendations(next, favorites || []),
+      recommendations: computeRecommendations(next, favorites),
     });
   },
-
+  setRecipes: (recipes) => {
+    const { searchTerm, favorites } = get();
+    set({
+      recipes,
+      filteredRecipes: computeFiltered(recipes, searchTerm),
+      recommendations: computeRecommendations(recipes, favorites),
+    });
+  },
   updateRecipe: (updated) => {
     const { recipes, searchTerm, favorites } = get();
     const next = recipes.map((r) => (r.id === updated.id ? updated : r));
     set({
       recipes: next,
       filteredRecipes: computeFiltered(next, searchTerm),
-      recommendations: computeRecommendations(next, favorites || []),
+      recommendations: computeRecommendations(next, favorites),
     });
   },
-
   deleteRecipe: (id) => {
     const { recipes, searchTerm, favorites } = get();
     const nextRecipes = recipes.filter((r) => r.id !== id);
-    const nextFavs = (favorites || []).filter((fid) => fid !== id);
+    const nextFavorites = favorites.filter((fid) => fid !== id);
     set({
       recipes: nextRecipes,
       filteredRecipes: computeFiltered(nextRecipes, searchTerm),
-      favorites: nextFavs,
-      recommendations: computeRecommendations(nextRecipes, nextFavs),
+      favorites: nextFavorites,
+      recommendations: computeRecommendations(nextRecipes, nextFavorites),
     });
   },
 
+  // Search
   setSearchTerm: (term) => {
     const { recipes } = get();
     set({
@@ -88,34 +97,31 @@ export const useRecipeStore = create((set) => ({
       filteredRecipes: computeFiltered(recipes, term),
     });
   },
-
   filterRecipes: () => {
     const { recipes, searchTerm } = get();
     set({ filteredRecipes: computeFiltered(recipes, searchTerm) });
   },
 
+  // Favorites & recommendations
   addFavorite: (recipeId) => {
     const { favorites, recipes } = get();
-    if ((favorites || []).includes(recipeId)) return;
-    const nextFavs = [...(favorites || []), recipeId];
+    if (favorites.includes(recipeId)) return;
+    const nextFavorites = [...favorites, recipeId];
     set({
-      favorites: nextFavs,
-      recommendations: computeRecommendations(recipes, nextFavs),
+      favorites: nextFavorites,
+      recommendations: computeRecommendations(recipes, nextFavorites),
     });
   },
-
   removeFavorite: (recipeId) => {
     const { favorites, recipes } = get();
-    const nextFavs = (favorites || []).filter((fid) => fid !== recipeId);
+    const nextFavorites = favorites.filter((fid) => fid !== recipeId);
     set({
-      favorites: nextFavs,
-      recommendations: computeRecommendations(recipes, nextFavs),
+      favorites: nextFavorites,
+      recommendations: computeRecommendations(recipes, nextFavorites),
     });
   },
-
   generateRecommendations: () => {
     const { recipes, favorites } = get();
-    set({ recommendations: computeRecommendations(recipes, favorites || []) });
+    set({ recommendations: computeRecommendations(recipes, favorites) });
   },
-  setRecipes: (recipes) => set({ recipes }),
 }));
