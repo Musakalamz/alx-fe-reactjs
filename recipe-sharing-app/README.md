@@ -1,14 +1,14 @@
 # Recipe Sharing App
 
-A simple React application for sharing, searching, and managing recipes. Built with Zustand for state management and React Router for navigation.
+A React application for sharing and managing recipes with search, favorites, and personalized recommendations. Built with Zustand for state and React Router for navigation.
 
 ## Features
 
 - Add, edit, and delete recipes
 - View individual recipe details
-- Search and filter recipes by title and description
+- Search and filter by title/description
 - Mark recipes as favorites
-- Personalized recommendations based on your favorites
+- Personalized recommendations based on favorites
 - Client-side routing
 
 ## Tech Stack
@@ -17,14 +17,12 @@ A simple React application for sharing, searching, and managing recipes. Built w
 - Zustand
 - React Router DOM
 
-## Getting Started
+## Prerequisites
 
-### Prerequisites
-
-- Node.js 18+ recommended
+- Node.js 18+
 - npm 8+
 
-### Installation
+## Installation
 
 1. Install dependencies:
 
