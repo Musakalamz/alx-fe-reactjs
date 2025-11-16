@@ -1,4 +1,4 @@
-import create from "zustand";
+import { create } from "zustand";
 
 const computeFiltered = (recipes, term) => {
   const q = (term || "").trim().toLowerCase();
