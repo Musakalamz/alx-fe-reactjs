@@ -3,6 +3,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { useRecipeStore } from './recipeStore';
 import EditRecipeForm from './EditRecipeForm';
 import DeleteRecipeButton from './DeleteRecipeButton';
+import FavoriteToggleButton from './FavoriteToggleButton';
 
 const RecipeDetails = () => {
   const { id } = useParams();
@@ -23,6 +24,7 @@ const RecipeDetails = () => {
     <div>
       <h1 style={{ marginBottom: 8 }}>{recipe.title}</h1>
       <p style={{ marginBottom: 16 }}>{recipe.description}</p>
+      <FavoriteToggleButton recipeId={recipeId} />
 
       <h2>Edit Recipe</h2>
       <EditRecipeForm recipeId={recipeId} />
