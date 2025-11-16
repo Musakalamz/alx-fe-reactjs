@@ -1,10 +1,10 @@
 import { useRecipeStore } from './recipeStore';
 
 const FavoritesList = () => {
-  const favorites = useRecipeStore((state) => state.favorites);
-  const recipes = useRecipeStore((state) => state.recipes);
+  const favorites = useRecipeStore((s) => s.favorites || []);
+  const recipes = useRecipeStore((s) => s.recipes);
 
-  const favoriteRecipes = favorites
+  const favoriteRecipes = (favorites || [])
     .map((id) => recipes.find((r) => r.id === id))
     .filter(Boolean);
 
