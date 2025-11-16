@@ -3,6 +3,7 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import SearchBar from './components/SearchBar';
 import AddRecipeForm from './components/AddRecipeForm';
 import RecipeList from './components/RecipeList';
 import RecipeDetails from './components/RecipeDetails';
@@ -19,6 +20,8 @@ function App() {
             path="/"
             element={
               <>
+                <h1>Recipe Sharing App</h1>
+                <SearchBar />
                 <AddRecipeForm />
                 <RecipeList />
               </>
