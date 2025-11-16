@@ -1,9 +1,17 @@
+import { useNavigate } from 'react-router-dom';
+import { useRecipeStore } from './recipeStore';
+
 const DeleteRecipeButton = ({ recipeId, onDeleted }) => {
   const deleteRecipe = useRecipeStore((s) => s.deleteRecipe);
+  const navigate = useNavigate();
 
   const handleDelete = () => {
     deleteRecipe(recipeId);
-    if (typeof onDeleted === 'function') onDeleted();
+    if (typeof onDeleted === 'function') {
+      onDeleted();
+    } else {
+      navigate('/');
+    }
   };
 
   return (

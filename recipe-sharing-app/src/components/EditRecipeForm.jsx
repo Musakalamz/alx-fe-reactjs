@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useRecipeStore } from './recipeStore';
 
-const EditRecipeForm = ({ recipeId }) => {
+function EditRecipeForm() {
   const recipe = useRecipeStore((s) => s.recipes.find((r) => r.id === recipeId));
   const updateRecipe = useRecipeStore((s) => s.updateRecipe);
   const [title, setTitle] = useState(recipe ? recipe.title : '');
