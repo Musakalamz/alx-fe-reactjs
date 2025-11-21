@@ -1,68 +1,139 @@
 import { useState } from "react";
-import { fetchUserData } from "../services/githubService";
+import { searchUsers } from "../services/githubService";
 
 function Search() {
-  const [input, setInput] = useState("");
+  const [query, setQuery] = useState("");
+  const [location, setLocation] = useState("");
+  const [minRepos, setMinRepos] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [user, setUser] = useState(null);
+  const [results, setResults] = useState([]);
+  const [totalCount, setTotalCount] = useState(0);
+  const [page, setPage] = useState(1);
+  const [hasSearched, setHasSearched] = useState(false);
 
-  async function handleSubmit(e) {
-    e.preventDefault();
-    const username = input.trim();
-    if (!username) return;
+  async function runSearch(nextPage = 1, append = false) {
     setLoading(true);
     setError(null);
-    setUser(null);
-    const { data, error } = await fetchUserData(username);
+    const { data, error } = await searchUsers({
+      query: query.trim(),
+      location: location.trim(),
+      minRepos: minRepos ? Number(minRepos) : undefined,
+      page: nextPage,
+      perPage: 30,
+    });
     setLoading(false);
     if (error) {
       setError("Looks like we cant find the user");
       return;
     }
-    setUser(data);
+    setHasSearched(true);
+    setTotalCount(data.totalCount || 0);
+    setResults(append ? [...results, ...data.users] : data.users);
+    setPage(nextPage);
+  }
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+    await runSearch(1, false);
+  }
+
+  async function handleLoadMore() {
+    await runSearch(page + 1, true);
   }
 
   return (
-    <div>
+    <div className="max-w-2xl mx-auto">
       <form
         onSubmit={handleSubmit}
-        style={{ display: "flex", gap: 8, marginBottom: 16 }}
+        className="grid grid-cols-1 md:grid-cols-4 gap-2 md:gap-3 mb-4"
       >
         <input
           type="search"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder="Enter GitHub username"
-          style={{ flex: 1, padding: 10, fontSize: 16 }}
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="Search keyword or username"
+          className="md:col-span-2 px-3 py-2 border rounded outline-none focus:ring-2 focus:ring-indigo-500"
         />
-        <button type="submit" style={{ padding: "10px 16px", fontSize: 16 }}>
+        <input
+          type="text"
+          value={location}
+          onChange={(e) => setLocation(e.target.value)}
+          placeholder="Location"
+          className="px-3 py-2 border rounded outline-none focus:ring-2 focus:ring-indigo-500"
+        />
+        <input
+          type="number"
+          min="0"
+          value={minRepos}
+          onChange={(e) => setMinRepos(e.target.value)}
+          placeholder="Min repos"
+          className="px-3 py-2 border rounded outline-none focus:ring-2 focus:ring-indigo-500"
+        />
+        <button
+          type="submit"
+          className="md:col-span-4 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded"
+        >
           Search
         </button>
       </form>
 
       {loading && <p>Loading...</p>}
-      {!loading && error && <p style={{ color: "crimson" }}>{error}</p>}
+      {!loading && error && <p className="text-red-600">{error}</p>}
 
-      {!loading && !error && user && (
-        <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
-          <img
-            src={user.avatar_url}
-            alt={user.login}
-            width={80}
-            height={80}
-            style={{ borderRadius: 8 }}
-          />
-          <div>
-            <div style={{ fontSize: 18, fontWeight: 600 }}>
-              {user.name || user.login}
-            </div>
-            <a href={user.html_url} target="_blank" rel="noreferrer">
-              View GitHub Profile
-            </a>
-          </div>
-        </div>
+      {!loading && !error && hasSearched && results.length === 0 && (
+        <p>No users found</p>
       )}
+
+      {!loading && !error && results.length > 0 && (
+        <ul className="space-y-3">
+          {results.map((u) => (
+            <li
+              key={u.login}
+              className="flex items-center gap-4 p-4 border rounded"
+            >
+              <img
+                src={u.avatar_url}
+                alt={u.login}
+                width={64}
+                height={64}
+                className="rounded"
+              />
+              <div className="flex-1">
+                <div className="font-semibold text-lg">{u.name || u.login}</div>
+                <div className="text-sm text-gray-600">
+                  {u.location ? `Location: ${u.location}` : "Location: N/A"} ·{" "}
+                  {u.public_repos != null
+                    ? `Repos: ${u.public_repos}`
+                    : "Repos: N/A"}
+                </div>
+                <a
+                  href={u.html_url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-indigo-600"
+                >
+                  View GitHub Profile
+                </a>
+              </div>
+            </li>
+          ))}
+        </ul>
+      )}
+
+      {!loading &&
+        !error &&
+        results.length > 0 &&
+        results.length < totalCount && (
+          <div className="mt-4">
+            <button
+              onClick={handleLoadMore}
+              className="bg-gray-100 hover:bg-gray-200 px-4 py-2 rounded"
+            >
+              Load more
+            </button>
+          </div>
+        )}
     </div>
   );
 }
