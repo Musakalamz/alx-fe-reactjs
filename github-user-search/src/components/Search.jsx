@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { searchUsers } from "../services/githubService";
+import { searchUsers, fetchUserData } from "../services/githubService";
 
 function Search() {
   const [query, setQuery] = useState("");
@@ -15,21 +15,38 @@ function Search() {
   async function runSearch(nextPage = 1, append = false) {
     setLoading(true);
     setError(null);
-    const { data, error } = await searchUsers({
-      query: query.trim(),
-      location: location.trim(),
-      minRepos: minRepos ? Number(minRepos) : undefined,
-      page: nextPage,
-      perPage: 30,
-    });
+    const q = query.trim();
+    const loc = location.trim();
+    const min = minRepos ? Number(minRepos) : undefined;
+
+    let data, error;
+    if (nextPage === 1 && q && !loc && !min) {
+      const res = await fetchUserData(q);
+      data = res.data
+        ? { totalCount: 1, users: [res.data] }
+        : { totalCount: 0, users: [] };
+      error = res.error || null;
+    } else {
+      const res = await searchUsers({
+        query: q,
+        location: loc,
+        minRepos: min,
+        page: nextPage,
+        perPage: 30,
+      });
+      data = res.data;
+      error = res.error || null;
+    }
+
     setLoading(false);
     if (error) {
       setError("Looks like we cant find the user");
       return;
     }
     setHasSearched(true);
-    setTotalCount(data.totalCount || 0);
-    setResults(append ? [...results, ...data.users] : data.users);
+    setTotalCount(data?.totalCount || 0);
+    const list = data?.users || [];
+    setResults(append ? [...results, ...list] : list);
     setPage(nextPage);
   }
 
