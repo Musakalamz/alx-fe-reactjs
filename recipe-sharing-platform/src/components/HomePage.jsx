@@ -1,8 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import data from "../data.json";
 
 function HomePage() {
   const [recipes] = useState(data);
+
+  useEffect(() => {
+    document.title = "Recipe Sharing Platform";
+  }, []);
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
