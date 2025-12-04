@@ -1,12 +1,8 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import data from "../data.json";
 
 function HomePage() {
-  const [recipes, setRecipes] = useState([]);
-
-  useEffect(() => {
-    setRecipes(data);
-  }, []);
+  const [recipes] = useState(data);
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
