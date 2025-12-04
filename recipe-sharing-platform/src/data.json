@@ -3,18 +3,63 @@
     "id": 1,
     "title": "Spaghetti Carbonara",
     "summary": "A classic Italian pasta dish with eggs, cheese, bacon, and black pepper.",
-    "image": "https://via.placeholder.com/300x200"
+    "image": "https://via.placeholder.com/300x200",
+    "ingredients": [
+      "Spaghetti",
+      "Eggs",
+      "Pecorino Romano",
+      "Pancetta",
+      "Black pepper",
+      "Salt"
+    ],
+    "instructions": [
+      "Boil spaghetti in salted water until al dente.",
+      "Cook pancetta until crisp.",
+      "Whisk eggs with grated cheese and pepper.",
+      "Combine hot pasta with pancetta and egg mixture off heat.",
+      "Toss until creamy and serve immediately."
+    ]
   },
   {
     "id": 2,
     "title": "Chicken Tikka Masala",
     "summary": "Chunks of grilled chicken (tikka) cooked in a smooth buttery & creamy tomato based gravy.",
-    "image": "https://via.placeholder.com/300x200"
+    "image": "https://via.placeholder.com/300x200",
+    "ingredients": [
+      "Chicken",
+      "Yogurt",
+      "Garam masala",
+      "Tomato puree",
+      "Cream",
+      "Garlic",
+      "Ginger"
+    ],
+    "instructions": [
+      "Marinate chicken in yogurt and spices.",
+      "Grill or sear chicken until charred.",
+      "Simmer sauce of tomato puree, spices, and cream.",
+      "Add chicken to sauce and cook until tender.",
+      "Serve with rice or naan."
+    ]
   },
   {
     "id": 3,
     "title": "Avocado Toast",
     "summary": "Crunchy toast topped with creamy avocado, lemon, and chili flakes.",
-    "image": "https://via.placeholder.com/300x200"
+    "image": "https://via.placeholder.com/300x200",
+    "ingredients": [
+      "Bread",
+      "Avocado",
+      "Lemon",
+      "Olive oil",
+      "Chili flakes",
+      "Salt"
+    ],
+    "instructions": [
+      "Toast bread until golden.",
+      "Mash avocado with lemon juice and salt.",
+      "Spread on toast and drizzle olive oil.",
+      "Top with chili flakes and serve."
+    ]
   }
 ]
