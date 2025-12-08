@@ -72,7 +72,7 @@ export default function RegistrationForm() {
         address: "",
         acceptTerms: false,
       });
-    } catch (err) {
+    } catch {
       setStatus({ loading: false, success: "", error: "Registration failed" });
     }
   };

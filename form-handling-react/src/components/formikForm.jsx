@@ -44,7 +44,7 @@ export default function FormikForm() {
       const data = await res.json();
       setStatus({ success: `Registered with id ${data.id ?? "N/A"}` });
       resetForm();
-    } catch (e) {
+    } catch {
       setStatus({ error: "Registration failed" });
     } finally {
       setSubmitting(false);
