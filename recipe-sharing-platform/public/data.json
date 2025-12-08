@@ -1,0 +1,47 @@
+[
+  {
+    "id": 1,
+    "title": "Spaghetti Bolognese",
+    "image": "/images/spaghetti.jpg",
+    "ingredients": [
+      "200g spaghetti",
+      "150g minced beef",
+      "1 onion",
+      "2 cloves garlic",
+      "400g tomato sauce",
+      "Salt",
+      "Pepper",
+      "Olive oil"
+    ],
+    "steps": [
+      "Boil spaghetti until al dente",
+      "Sauté onion and garlic in olive oil",
+      "Add minced beef and cook",
+      "Pour in tomato sauce and simmer",
+      "Season with salt and pepper",
+      "Serve sauce over spaghetti"
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Chicken Salad",
+    "image": "/images/salad.jpg",
+    "ingredients": [
+      "200g chicken breast",
+      "Lettuce",
+      "Cherry tomatoes",
+      "Cucumber",
+      "Olive oil",
+      "Lemon juice",
+      "Salt",
+      "Pepper"
+    ],
+    "steps": [
+      "Grill chicken and slice",
+      "Combine vegetables in a bowl",
+      "Mix olive oil and lemon juice",
+      "Toss salad with dressing",
+      "Top with chicken slices"
+    ]
+  }
+]

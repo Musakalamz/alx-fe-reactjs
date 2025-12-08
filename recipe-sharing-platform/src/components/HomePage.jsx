@@ -1,43 +1,53 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import data from "../data.json";
 
-function HomePage() {
-  const [recipes] = useState(data);
+export default function HomePage() {
+  const [recipes, setRecipes] = useState([]);
 
   useEffect(() => {
-    document.title = "Recipe Sharing Platform";
+    async function load() {
+      try {
+        const res = await fetch("/data.json");
+        const base = await res.json();
+        const stored = JSON.parse(localStorage.getItem("recipes") || "[]");
+        setRecipes([...base, ...stored]);
+      } catch {
+        const stored = JSON.parse(localStorage.getItem("recipes") || "[]");
+        setRecipes(stored);
+      }
+    }
+    load();
   }, []);
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-6">Recipe Sharing Platform</h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
-        {recipes.map((recipe) => (
-          <div
-            key={recipe.id}
-            className="bg-white rounded-lg shadow transition-transform hover:-translate-y-1 hover:shadow-lg overflow-hidden"
+    <div className="max-w-5xl mx-auto p-6">
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-3xl font-bold">Recipes</h1>
+        <Link
+          to="/add"
+          className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
+        >
+          Add Recipe
+        </Link>
+      </div>
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {recipes.map((r) => (
+          <Link
+            key={r.id}
+            to={`/recipe/${r.id}`}
+            className="bg-white rounded-lg shadow hover:shadow-md transition p-4"
           >
-            <img
-              src={recipe.image}
-              alt={recipe.title}
-              className="w-full h-40 object-cover"
-            />
-            <div className="p-4">
-              <h2 className="text-lg font-semibold">{recipe.title}</h2>
-              <p className="text-gray-600 mt-2">{recipe.summary}</p>
-              <Link
-                to={`/recipe/${recipe.id}`}
-                className="inline-block mt-4 text-blue-600 hover:text-blue-700"
-              >
-                View Details
-              </Link>
-            </div>
-          </div>
+            {r.image && (
+              <img
+                src={r.image}
+                alt={r.title}
+                className="w-full h-40 object-cover rounded-md mb-3"
+              />
+            )}
+            <div className="text-lg font-semibold">{r.title}</div>
+          </Link>
         ))}
       </div>
     </div>
   );
 }
-
-export default HomePage;

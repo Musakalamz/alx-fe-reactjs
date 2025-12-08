@@ -1,80 +1,100 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-function AddRecipeForm() {
+export default function AddRecipeForm() {
+  const navigate = useNavigate();
   const [title, setTitle] = useState("");
-  const [ingredients, setIngredients] = useState("");
-  const [steps, setSteps] = useState("");
+  const [ingredientsText, setIngredientsText] = useState("");
+  const [stepsText, setStepsText] = useState("");
   const [errors, setErrors] = useState({});
-  const [submitted, setSubmitted] = useState(false);
 
-  const validate = () => {
-    const next = {};
-    if (!title.trim()) next.title = "Title is required";
-    if (!ingredients.trim()) next.ingredients = "Ingredients are required";
-    if (!steps.trim()) next.steps = "Preparation steps are required";
-    const ingList = ingredients.split("\n").map((i) => i.trim()).filter(Boolean);
-    if (ingList.length < 2) next.ingredients = "Add at least two ingredients";
-    setErrors(next);
-    return Object.keys(next).length === 0;
-  };
+  function validate() {
+    const ing = ingredientsText
+      .split("\n")
+      .map((s) => s.trim())
+      .filter(Boolean);
+    const steps = stepsText
+      .split("\n")
+      .map((s) => s.trim())
+      .filter(Boolean);
+    const errs = {};
+    if (!title.trim()) errs.title = "Title is required";
+    if (ing.length < 2)
+      errs.ingredientsText = "Provide at least two ingredients";
+    if (steps.length < 1) errs.stepsText = "Provide at least one step";
+    setErrors(errs);
+    return { valid: Object.keys(errs).length === 0, ing, steps };
+  }
 
-  const onSubmit = (e) => {
+  function onSubmit(e) {
     e.preventDefault();
-    if (!validate()) return;
-    setSubmitted(true);
-  };
+    const { valid, ing, steps } = validate();
+    if (!valid) return;
+    const newRecipe = {
+      id: Date.now(),
+      title: title.trim(),
+      image: "",
+      ingredients: ing,
+      steps,
+    };
+    const existing = JSON.parse(localStorage.getItem("recipes") || "[]");
+    const updated = [newRecipe, ...existing];
+    localStorage.setItem("recipes", JSON.stringify(updated));
+    navigate(`/recipe/${newRecipe.id}`);
+  }
 
   return (
-    <div className="max-w-2xl mx-auto px-4 py-8">
-      <h1 className="text-2xl font-bold mb-6">Add New Recipe</h1>
-      <form onSubmit={onSubmit} className="space-y-6">
+    <div className="max-w-2xl mx-auto p-6">
+      <h1 className="text-2xl font-bold mb-4">Add New Recipe</h1>
+      <form onSubmit={onSubmit} className="space-y-5">
         <div>
-          <label className="block text-sm font-medium mb-2">Title</label>
+          <label className="block text-sm font-medium mb-1">Title</label>
           <input
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="Recipe title"
           />
-          {errors.title && <p className="text-red-600 text-sm mt-1">{errors.title}</p>}
+          {errors.title && (
+            <div className="text-red-600 text-sm mt-1">{errors.title}</div>
+          )}
         </div>
         <div>
-          <label className="block text-sm font-medium mb-2">Ingredients</label>
+          <label className="block text-sm font-medium mb-1">Ingredients</label>
           <textarea
-            value={ingredients}
-            onChange={(e) => setIngredients(e.target.value)}
-            className="w-full border rounded px-3 py-2 h-32 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            value={ingredientsText}
+            onChange={(e) => setIngredientsText(e.target.value)}
+            className="w-full border border-gray-300 rounded-md p-3 h-32 resize-y focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="One ingredient per line"
           />
-          {errors.ingredients && <p className="text-red-600 text-sm mt-1">{errors.ingredients}</p>}
+          {errors.ingredientsText && (
+            <div className="text-red-600 text-sm mt-1">
+              {errors.ingredientsText}
+            </div>
+          )}
         </div>
         <div>
-          <label className="block text-sm font-medium mb-2">Preparation Steps</label>
+          <label className="block text-sm font-medium mb-1">
+            Preparation Steps
+          </label>
           <textarea
-            value={steps}
-            onChange={(e) => setSteps(e.target.value)}
-            className="w-full border rounded px-3 py-2 h-40 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            value={stepsText}
+            onChange={(e) => setStepsText(e.target.value)}
+            className="w-full border border-gray-300 rounded-md p-3 h-32 resize-y focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="One step per line"
           />
-          {errors.steps && <p className="text-red-600 text-sm mt-1">{errors.steps}</p>}
+          {errors.stepsText && (
+            <div className="text-red-600 text-sm mt-1">{errors.stepsText}</div>
+          )}
         </div>
         <button
           type="submit"
-          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+          className="w-full sm:w-auto bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
           Submit
         </button>
       </form>
-      {submitted && (
-        <div className="mt-6 p-4 bg-green-50 border border-green-200 rounded">
-          <p className="text-green-700">Recipe submitted successfully.</p>
-        </div>
-      )}
-      <Link to="/" className="inline-block mt-6 text-blue-600">Back to Home</Link>
     </div>
   );
 }
-
-export default AddRecipeForm;

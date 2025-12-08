@@ -1,50 +1,74 @@
-import { useMemo } from "react";
+import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import data from "../data.json";
 
-function RecipeDetail() {
+export default function RecipeDetail() {
   const { id } = useParams();
-  const recipe = useMemo(() => data.find((r) => String(r.id) === String(id)), [id]);
+  const [recipe, setRecipe] = useState(null);
+  const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    async function load() {
+      try {
+        const res = await fetch("/data.json");
+        const base = await res.json();
+        const stored = JSON.parse(localStorage.getItem("recipes") || "[]");
+        const all = [...base, ...stored];
+        const found = all.find((r) => String(r.id) === String(id));
+        setRecipe(found || null);
+      } catch {
+        setRecipe(null);
+      } finally {
+        setLoading(false);
+      }
+    }
+    load();
+  }, [id]);
+
+  if (loading) return <div className="max-w-3xl mx-auto p-6">Loading...</div>;
   if (!recipe) {
     return (
-      <div className="max-w-3xl mx-auto px-4 py-8">
-        <p className="text-red-600">Recipe not found.</p>
-        <Link to="/" className="text-blue-600">Back to Home</Link>
+      <div className="max-w-3xl mx-auto p-6">
+        <div className="text-red-600 font-semibold mb-4">Recipe not found</div>
+        <Link to="/" className="text-blue-600 hover:underline">
+          Back to Home
+        </Link>
       </div>
     );
   }
 
   return (
-    <div className="max-w-3xl mx-auto px-4 py-8">
-      <div className="bg-white rounded-lg shadow overflow-hidden">
-        <img src={recipe.image} alt={recipe.title} className="w-full h-56 object-cover" />
-        <div className="p-6">
-          <h1 className="text-2xl font-bold">{recipe.title}</h1>
-          <p className="text-gray-700 mt-2">{recipe.summary}</p>
-          <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="bg-gray-50 p-4 rounded">
-              <h2 className="text-lg font-semibold">Ingredients</h2>
-              <ul className="mt-2 list-disc list-inside space-y-1">
-                {recipe.ingredients?.map((item, idx) => (
-                  <li key={idx} className="text-gray-700">{item}</li>
-                ))}
-              </ul>
-            </div>
-            <div className="bg-gray-50 p-4 rounded">
-              <h2 className="text-lg font-semibold">Instructions</h2>
-              <ol className="mt-2 list-decimal list-inside space-y-2">
-                {recipe.instructions?.map((step, idx) => (
-                  <li key={idx} className="text-gray-700">{step}</li>
-                ))}
-              </ol>
-            </div>
-          </div>
-          <Link to="/" className="inline-block mt-6 text-blue-600">Back to Home</Link>
-        </div>
+    <div className="max-w-3xl mx-auto p-6">
+      <Link to="/" className="text-blue-600 hover:underline">
+        Back to Home
+      </Link>
+      <h1 className="text-3xl font-bold mt-2 mb-4">{recipe.title}</h1>
+      {recipe.image && (
+        <img
+          src={recipe.image}
+          alt={recipe.title}
+          className="w-full h-64 object-cover rounded-lg mb-6"
+        />
+      )}
+      <div className="bg-white rounded-lg shadow p-4 mb-6">
+        <h2 className="text-xl font-semibold mb-3">Ingredients</h2>
+        <ul className="list-disc pl-6 space-y-1">
+          {(recipe.ingredients || []).map((ing, i) => (
+            <li key={i} className="text-gray-700">
+              {ing}
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div className="bg-white rounded-lg shadow p-4">
+        <h2 className="text-xl font-semibold mb-3">Steps</h2>
+        <ol className="list-decimal pl-6 space-y-2">
+          {(recipe.steps || []).map((step, i) => (
+            <li key={i} className="text-gray-700">
+              {step}
+            </li>
+          ))}
+        </ol>
       </div>
     </div>
   );
 }
-
-export default RecipeDetail;
