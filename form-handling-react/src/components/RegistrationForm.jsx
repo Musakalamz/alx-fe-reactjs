@@ -12,6 +12,9 @@ export default function RegistrationForm() {
     address: "",
     acceptTerms: false,
   });
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState({
     loading: false,
@@ -85,8 +88,11 @@ export default function RegistrationForm() {
         <input
           className="rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
           name="username"
-          value={values.username}
-          onChange={handleChange}
+          value={username}
+          onChange={(e) => {
+            setUsername(e.target.value);
+            setValues((v) => ({ ...v, username: e.target.value }));
+          }}
         />
         {errors.username && (
           <div className="text-sm text-red-600">{errors.username}</div>
@@ -97,8 +103,11 @@ export default function RegistrationForm() {
         <input
           className="rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
           name="email"
-          value={values.email}
-          onChange={handleChange}
+          value={email}
+          onChange={(e) => {
+            setEmail(e.target.value);
+            setValues((v) => ({ ...v, email: e.target.value }));
+          }}
         />
         {errors.email && (
           <div className="text-sm text-red-600">{errors.email}</div>
@@ -110,8 +119,11 @@ export default function RegistrationForm() {
           className="rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
           type="password"
           name="password"
-          value={values.password}
-          onChange={handleChange}
+          value={password}
+          onChange={(e) => {
+            setPassword(e.target.value);
+            setValues((v) => ({ ...v, password: e.target.value }));
+          }}
         />
         {errors.password && (
           <div className="text-sm text-red-600">{errors.password}</div>
