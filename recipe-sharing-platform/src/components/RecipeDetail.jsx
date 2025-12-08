@@ -59,8 +59,8 @@ export default function RecipeDetail() {
           ))}
         </ul>
       </div>
-      <div className="bg-white rounded-lg shadow p-4">
-        <h2 className="text-xl font-semibold mb-3">Steps</h2>
+      <div className="bg-white rounded-lg shadow p-4" aria-label="instructions">
+        <h2 className="text-xl font-semibold mb-3">Instructions</h2>
         <ol className="list-decimal pl-6 space-y-2">
           {(recipe.steps || []).map((step, i) => (
             <li key={i} className="text-gray-700">

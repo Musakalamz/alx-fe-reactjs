@@ -26,7 +26,7 @@ export default function AddRecipeForm() {
     return { valid: Object.keys(errs).length === 0, ing, steps };
   }
 
-  function onSubmit(e) {
+  function handleSubmit(e) {
     e.preventDefault();
     const { valid, ing, steps } = validate();
     if (!valid) return;
@@ -46,7 +46,7 @@ export default function AddRecipeForm() {
   return (
     <div className="max-w-2xl mx-auto p-6">
       <h1 className="text-2xl font-bold mb-4">Add New Recipe</h1>
-      <form onSubmit={onSubmit} className="space-y-5">
+      <form onSubmit={handleSubmit} className="space-y-5">
         <div>
           <label className="block text-sm font-medium mb-1">Title</label>
           <input
