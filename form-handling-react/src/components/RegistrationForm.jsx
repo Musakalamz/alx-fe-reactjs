@@ -78,86 +78,131 @@ export default function RegistrationForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Register</h2>
-      <div>
-        <label>Username</label>
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <h2 className="text-xl font-semibold mb-2">Register</h2>
+      <div className="flex flex-col gap-1">
+        <label className="text-sm font-medium text-gray-700">Username</label>
         <input
+          className="rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
           name="username"
           value={values.username}
           onChange={handleChange}
         />
-        {errors.username && <div>{errors.username}</div>}
+        {errors.username && (
+          <div className="text-sm text-red-600">{errors.username}</div>
+        )}
       </div>
-      <div>
-        <label>Email</label>
-        <input name="email" value={values.email} onChange={handleChange} />
-        {errors.email && <div>{errors.email}</div>}
-      </div>
-      <div>
-        <label>Password</label>
+      <div className="flex flex-col gap-1">
+        <label className="text-sm font-medium text-gray-700">Email</label>
         <input
+          className="rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          name="email"
+          value={values.email}
+          onChange={handleChange}
+        />
+        {errors.email && (
+          <div className="text-sm text-red-600">{errors.email}</div>
+        )}
+      </div>
+      <div className="flex flex-col gap-1">
+        <label className="text-sm font-medium text-gray-700">Password</label>
+        <input
+          className="rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
           type="password"
           name="password"
           value={values.password}
           onChange={handleChange}
         />
-        {errors.password && <div>{errors.password}</div>}
+        {errors.password && (
+          <div className="text-sm text-red-600">{errors.password}</div>
+        )}
       </div>
-      <div>
-        <label>Confirm Password</label>
+      <div className="flex flex-col gap-1">
+        <label className="text-sm font-medium text-gray-700">
+          Confirm Password
+        </label>
         <input
+          className="rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
           type="password"
           name="confirmPassword"
           value={values.confirmPassword}
           onChange={handleChange}
         />
-        {errors.confirmPassword && <div>{errors.confirmPassword}</div>}
+        {errors.confirmPassword && (
+          <div className="text-sm text-red-600">{errors.confirmPassword}</div>
+        )}
       </div>
-      <div>
-        <label>First Name</label>
+      <div className="flex flex-col gap-1">
+        <label className="text-sm font-medium text-gray-700">First Name</label>
         <input
+          className="rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
           name="firstName"
           value={values.firstName}
           onChange={handleChange}
         />
-        {errors.firstName && <div>{errors.firstName}</div>}
+        {errors.firstName && (
+          <div className="text-sm text-red-600">{errors.firstName}</div>
+        )}
       </div>
-      <div>
-        <label>Last Name</label>
+      <div className="flex flex-col gap-1">
+        <label className="text-sm font-medium text-gray-700">Last Name</label>
         <input
+          className="rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
           name="lastName"
           value={values.lastName}
           onChange={handleChange}
         />
-        {errors.lastName && <div>{errors.lastName}</div>}
+        {errors.lastName && (
+          <div className="text-sm text-red-600">{errors.lastName}</div>
+        )}
       </div>
-      <div>
-        <label>Phone</label>
-        <input name="phone" value={values.phone} onChange={handleChange} />
-        {errors.phone && <div>{errors.phone}</div>}
+      <div className="flex flex-col gap-1">
+        <label className="text-sm font-medium text-gray-700">Phone</label>
+        <input
+          className="rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          name="phone"
+          value={values.phone}
+          onChange={handleChange}
+        />
+        {errors.phone && (
+          <div className="text-sm text-red-600">{errors.phone}</div>
+        )}
       </div>
-      <div>
-        <label>Address</label>
-        <input name="address" value={values.address} onChange={handleChange} />
+      <div className="flex flex-col gap-1">
+        <label className="text-sm font-medium text-gray-700">Address</label>
+        <input
+          className="rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          name="address"
+          value={values.address}
+          onChange={handleChange}
+        />
       </div>
-      <div>
-        <label>
+      <div className="flex items-center gap-2">
+        <label className="text-sm font-medium text-gray-700">
           <input
             type="checkbox"
             name="acceptTerms"
             checked={values.acceptTerms}
             onChange={handleChange}
-          />{" "}
+            className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+          />
           I accept terms
         </label>
-        {errors.acceptTerms && <div>{errors.acceptTerms}</div>}
+        {errors.acceptTerms && (
+          <div className="text-sm text-red-600">{errors.acceptTerms}</div>
+        )}
       </div>
-      <button type="submit" disabled={status.loading}>
+      <button
+        type="submit"
+        disabled={status.loading}
+        className="inline-flex items-center justify-center rounded-lg bg-indigo-600 px-4 py-2 text-white hover:bg-indigo-700 disabled:opacity-50"
+      >
         {status.loading ? "Submitting..." : "Register"}
       </button>
-      {status.success && <div>{status.success}</div>}
-      {status.error && <div>{status.error}</div>}
+      {status.success && (
+        <div className="text-green-600 mt-2">{status.success}</div>
+      )}
+      {status.error && <div className="text-red-600 mt-2">{status.error}</div>}
     </form>
   );
 }

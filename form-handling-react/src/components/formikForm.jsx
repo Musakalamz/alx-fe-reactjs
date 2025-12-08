@@ -58,58 +58,139 @@ export default function FormikForm() {
       onSubmit={handleSubmit}
     >
       {({ isSubmitting, status }) => (
-        <Form>
-          <h2>Register (Formik)</h2>
-          <div>
-            <label>Username</label>
-            <Field name="username" />
-            <ErrorMessage name="username" component="div" />
-          </div>
-          <div>
-            <label>Email</label>
-            <Field name="email" />
-            <ErrorMessage name="email" component="div" />
-          </div>
-          <div>
-            <label>Password</label>
-            <Field type="password" name="password" />
-            <ErrorMessage name="password" component="div" />
-          </div>
-          <div>
-            <label>Confirm Password</label>
-            <Field type="password" name="confirmPassword" />
-            <ErrorMessage name="confirmPassword" component="div" />
-          </div>
-          <div>
-            <label>First Name</label>
-            <Field name="firstName" />
-            <ErrorMessage name="firstName" component="div" />
-          </div>
-          <div>
-            <label>Last Name</label>
-            <Field name="lastName" />
-            <ErrorMessage name="lastName" component="div" />
-          </div>
-          <div>
-            <label>Phone</label>
-            <Field name="phone" />
-            <ErrorMessage name="phone" component="div" />
-          </div>
-          <div>
-            <label>Address</label>
-            <Field name="address" />
-          </div>
-          <div>
-            <label>
-              <Field type="checkbox" name="acceptTerms" /> I accept terms
+        <Form className="space-y-4">
+          <h2 className="text-xl font-semibold mb-2">Register (Formik)</h2>
+          <div className="flex flex-col gap-1">
+            <label className="text-sm font-medium text-gray-700">
+              Username
             </label>
-            <ErrorMessage name="acceptTerms" component="div" />
+            <Field
+              name="username"
+              className="rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            />
+            <ErrorMessage
+              name="username"
+              component="div"
+              className="text-sm text-red-600"
+            />
           </div>
-          <button type="submit" disabled={isSubmitting}>
+          <div className="flex flex-col gap-1">
+            <label className="text-sm font-medium text-gray-700">Email</label>
+            <Field
+              name="email"
+              className="rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            />
+            <ErrorMessage
+              name="email"
+              component="div"
+              className="text-sm text-red-600"
+            />
+          </div>
+          <div className="flex flex-col gap-1">
+            <label className="text-sm font-medium text-gray-700">
+              Password
+            </label>
+            <Field
+              type="password"
+              name="password"
+              className="rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            />
+            <ErrorMessage
+              name="password"
+              component="div"
+              className="text-sm text-red-600"
+            />
+          </div>
+          <div className="flex flex-col gap-1">
+            <label className="text-sm font-medium text-gray-700">
+              Confirm Password
+            </label>
+            <Field
+              type="password"
+              name="confirmPassword"
+              className="rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            />
+            <ErrorMessage
+              name="confirmPassword"
+              component="div"
+              className="text-sm text-red-600"
+            />
+          </div>
+          <div className="flex flex-col gap-1">
+            <label className="text-sm font-medium text-gray-700">
+              First Name
+            </label>
+            <Field
+              name="firstName"
+              className="rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            />
+            <ErrorMessage
+              name="firstName"
+              component="div"
+              className="text-sm text-red-600"
+            />
+          </div>
+          <div className="flex flex-col gap-1">
+            <label className="text-sm font-medium text-gray-700">
+              Last Name
+            </label>
+            <Field
+              name="lastName"
+              className="rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            />
+            <ErrorMessage
+              name="lastName"
+              component="div"
+              className="text-sm text-red-600"
+            />
+          </div>
+          <div className="flex flex-col gap-1">
+            <label className="text-sm font-medium text-gray-700">Phone</label>
+            <Field
+              name="phone"
+              className="rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            />
+            <ErrorMessage
+              name="phone"
+              component="div"
+              className="text-sm text-red-600"
+            />
+          </div>
+          <div className="flex flex-col gap-1">
+            <label className="text-sm font-medium text-gray-700">Address</label>
+            <Field
+              name="address"
+              className="rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            />
+          </div>
+          <div className="flex items-center gap-2">
+            <label className="text-sm font-medium text-gray-700">
+              <Field
+                type="checkbox"
+                name="acceptTerms"
+                className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+              />{" "}
+              I accept terms
+            </label>
+            <ErrorMessage
+              name="acceptTerms"
+              component="div"
+              className="text-sm text-red-600"
+            />
+          </div>
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className="inline-flex items-center justify-center rounded-lg bg-indigo-600 px-4 py-2 text-white hover:bg-indigo-700 disabled:opacity-50"
+          >
             {isSubmitting ? "Submitting..." : "Register"}
           </button>
-          {status?.success && <div>{status.success}</div>}
-          {status?.error && <div>{status.error}</div>}
+          {status?.success && (
+            <div className="text-green-600 mt-2">{status.success}</div>
+          )}
+          {status?.error && (
+            <div className="text-red-600 mt-2">{status.error}</div>
+          )}
         </Form>
       )}
     </Formik>
