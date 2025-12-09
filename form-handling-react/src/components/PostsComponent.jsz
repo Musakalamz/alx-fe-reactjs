@@ -1,0 +1,37 @@
+import { useQuery } from 'react-query'
+
+const fetchPosts = async () => {
+  const res = await fetch('https://jsonplaceholder.typicode.com/posts')
+  if (!res.ok) throw new Error('Failed to fetch posts')
+  return res.json()
+}
+
+export default function PostsComponent() {
+  const { data, error, isLoading, isFetching, refetch } = useQuery(
+    'posts',
+    fetchPosts,
+    {
+      staleTime: 60_000,
+      cacheTime: 300_000,
+      refetchOnWindowFocus: false,
+    }
+  )
+
+  if (isLoading) return <div>Loading...</div>
+  if (error) return <div>Error loading posts</div>
+
+  return (
+    <div>
+      <div style={{ marginBottom: 12 }}>
+        <button onClick={() => refetch()} disabled={isFetching}>
+          {isFetching ? 'Refreshing...' : 'Refresh'}
+        </button>
+      </div>
+      <ul>
+        {data.slice(0, 20).map((p) => (
+          <li key={p.id}>{p.title}</li>
+        ))}
+      </ul>
+    </div>
+  )
+}
