@@ -20,7 +20,8 @@ function App() {
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:id" element={<BlogPost />} />
           <Route element={<ProtectedRoute />}>
-            <Route path="profile/*" element={<Profile />} />
+            <Route path="/profile/*" element={<Profile />} />
+            <Route path="/profile" element={<Profile />} />
           </Route>
           <Route path="login" element={<Login />} />
           <Route path="*" element={<Navigate to="/" replace />} />
