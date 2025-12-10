@@ -1,22 +1,22 @@
-import { NavLink, useNavigate } from 'react-router-dom'
-import { useAuth } from '../auth/AuthContext.jsx'
+import { NavLink, useNavigate } from "react-router-dom";
+import { useAuth } from "../auth/context.js";
 
 export default function NavBar() {
-  const { isAuthenticated, login, logout } = useAuth()
-  const navigate = useNavigate()
+  const { isAuthenticated, login, logout } = useAuth();
+  const navigate = useNavigate();
 
   const handleLogin = () => {
-    login()
-    navigate('/profile')
-  }
+    login();
+    navigate("/profile");
+  };
 
   const handleLogout = () => {
-    logout()
-    navigate('/')
-  }
+    logout();
+    navigate("/");
+  };
 
   return (
-    <nav style={{ display: 'flex', gap: 12, paddingBottom: 16 }}>
+    <nav style={{ display: "flex", gap: 12, paddingBottom: 16 }}>
       <NavLink to="/">Home</NavLink>
       <NavLink to="/blog">Blog</NavLink>
       <NavLink to="/blog/1">Sample Post</NavLink>
@@ -27,6 +27,5 @@ export default function NavBar() {
         <button onClick={handleLogin}>Login</button>
       )}
     </nav>
-  )
+  );
 }
-

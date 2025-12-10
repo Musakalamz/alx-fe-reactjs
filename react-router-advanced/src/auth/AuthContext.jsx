@@ -1,14 +1,10 @@
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
-
-const AuthContext = createContext(null);
+import { useMemo, useState } from "react";
+import { AuthContext } from "./context.js";
 
 export function AuthProvider({ children }) {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  useEffect(() => {
-    const stored = localStorage.getItem("auth:isAuthenticated");
-    if (stored === "true") setIsAuthenticated(true);
-  }, []);
+  const [isAuthenticated, setIsAuthenticated] = useState(
+    () => localStorage.getItem("auth:isAuthenticated") === "true"
+  );
 
   const login = () => {
     setIsAuthenticated(true);
@@ -26,10 +22,4 @@ export function AuthProvider({ children }) {
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
-}
-
-export function useAuth() {
-  const ctx = useContext(AuthContext);
-  if (!ctx) throw new Error("useAuth must be used within AuthProvider");
-  return ctx;
 }
