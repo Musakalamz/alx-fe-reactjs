@@ -3,7 +3,7 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import NavBar from "./components/NavBar.jsx";
 import Home from "./pages/Home.jsx";
 import Blog from "./pages/Blog.jsx";
-import Post from "./pages/Post.jsx";
+import BlogPost from "./pages/BlogPost.jsx";
 import Profile from "./components/Profile.jsx";
 import ProfileDetails from "./pages/ProfileDetails.jsx";
 import ProfileSettings from "./pages/ProfileSettings.jsx";
@@ -18,7 +18,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="blog" element={<Blog />} />
-          <Route path="blog/:postId" element={<Post />} />
+          <Route path="blog/:id" element={<BlogPost />} />
           <Route element={<ProtectedRoute />}>
             <Route path="profile/*" element={<Profile />} />
           </Route>
