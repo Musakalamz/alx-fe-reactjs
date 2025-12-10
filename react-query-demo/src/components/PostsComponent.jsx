@@ -14,7 +14,8 @@ export default function PostsComponent() {
   const {
     data,
     error,
-    isPending,
+    isLoading,
+    isError,
     isFetching,
     refetch,
     dataUpdatedAt,
@@ -25,11 +26,11 @@ export default function PostsComponent() {
     refetchOnWindowFocus: false,
   })
 
-  if (isPending) {
+  if (isLoading) {
     return <div>Loading posts...</div>
   }
 
-  if (error) {
+  if (isError) {
     return <div>Something went wrong</div>
   }
 
