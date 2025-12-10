@@ -29,12 +29,16 @@ export default function PostsComponent() {
     refetchOnWindowFocus: false,
   });
 
+  const lastUpdatedLabel = dataUpdatedAt
+    ? new Date(dataUpdatedAt).toLocaleTimeString()
+    : "—";
+
   if (isLoading) {
     return <div>Loading posts...</div>;
   }
 
   if (isError) {
-    return <div>Something went wrong</div>;
+    return <div>Something went wrong: {error?.message || "Unknown error"}</div>;
   }
 
   return (
@@ -42,10 +46,7 @@ export default function PostsComponent() {
       <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
         <button onClick={() => refetch()}>Refetch</button>
         {isFetching && <span>Updating…</span>}
-        <span>
-          Last updated:{" "}
-          {new Date(dataUpdatedAt || Date.now()).toLocaleTimeString()}
-        </span>
+        <span>Last updated: {lastUpdatedLabel}</span>
       </div>
       <ul style={{ listStyle: "none", padding: 0, marginTop: "1rem" }}>
         {data.slice(0, 20).map((post) => (
