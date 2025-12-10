@@ -8,7 +8,7 @@ import Profile from "./components/Profile.jsx";
 import ProfileDetails from "./pages/ProfileDetails.jsx";
 import ProfileSettings from "./pages/ProfileSettings.jsx";
 import Login from "./pages/Login.jsx";
-import ProtectedRoute from "./auth/ProtectedRoute.jsx";
+import ProtectedRoute from "./components/ProtectedRoute.jsx";
 
 function App() {
   return (
