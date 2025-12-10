@@ -1,16 +1,47 @@
-# React + Vite
+# Advanced Data Handling with React Query
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Objective
+- Implement efficient data fetching, caching, and UI updates in a React application using React Query.
 
-Currently, two official plugins are available:
+## Stack
+- `React` 19
+- `Vite` 7
+- `@tanstack/react-query` 5 (modern React Query)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Why @tanstack/react-query
+- The classic `react-query@3` has peer dependencies on React 16–18. With React 19, install `@tanstack/react-query` and import from `@tanstack/react-query`.
 
-## React Compiler
+## Setup
+- Clone the repository and navigate to `react-query-demo`.
+- Install dependencies:
+  - `npm install`
+  - `npm install @tanstack/react-query`
+- Start the app:
+  - `npm run dev` (development)
+  - `npm run preview` (build + preview server)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Integration
+- Provider is initialized in `src/App.jsx` with `QueryClient` and `QueryClientProvider`.
+- `PostsComponent` in `src/components/PostsComponent.jsx` fetches posts from `https://jsonplaceholder.typicode.com/posts` using `useQuery`.
+- Caching is configured with `staleTime: 30000` and `refetchOnWindowFocus: false`.
+- A `Refetch` button triggers on-demand updates; `isFetching` indicates background refresh.
+- App includes a simple view toggle to unmount/mount the posts component so you can observe cached data on return.
 
-## Expanding the ESLint configuration
+## Commands
+- `npm run dev` – start Vite dev server
+- `npm run build` – production build
+- `npm run preview` – serve the production build
+- `npm run lint` – run ESLint
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Files
+- Provider: `src/App.jsx`
+- Posts component: `src/components/PostsComponent.jsx`
+
+## Testing and Evaluation
+- Use React Developer Tools to inspect the React Query cache.
+- Watch Network tab: when returning to Posts within `staleTime`, the list renders from cache without an immediate network request.
+- Click `Refetch` to manually update; observe `isFetching` and updated timestamp.
+
+## Notes
+- JSONPlaceholder endpoint: `https://jsonplaceholder.typicode.com/posts`
+- The component renders the first 20 posts for brevity.
