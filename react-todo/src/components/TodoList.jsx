@@ -9,7 +9,11 @@ function createTodo(text) {
   return { id, text, completed: false };
 }
 
-const initialTodos = ["Read documentation", "Write tests", "Ship features"];
+const initialTodos = [
+  "Read documentation",
+  "Write tests",
+  "Ship features",
+];
 
 export default function TodoList() {
   const [todos, setTodos] = useState(initialTodos.map((t) => createTodo(t)));
