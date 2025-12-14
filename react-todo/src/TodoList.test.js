@@ -1,0 +1,157 @@
+import "@testing-library/jest-dom";
+import { render, screen, fireEvent, within } from "@testing-library/react";
+import TodoList from "./components/TodoList.js";
+
+describe("TodoList", () => {
+  test("Write Initial Render Test", () => {
+    render(<TodoList />);
+    expect(
+      screen.getByRole("heading", { name: /todo list/i })
+    ).toBeInTheDocument();
+    expect(screen.getByText(/Read documentation/i)).toBeInTheDocument();
+    expect(screen.getByText(/Write tests/i)).toBeInTheDocument();
+    expect(screen.getByText(/Ship features/i)).toBeInTheDocument();
+  });
+
+  test("renders AddTodoForm controls", () => {
+    render(<TodoList />);
+    expect(screen.getByPlaceholderText(/add a new task/i)).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /add/i })).toBeInTheDocument();
+  });
+
+  test("Test Adding Todos", () => {
+    render(<TodoList />);
+    const input = screen.getByPlaceholderText(/add a new task/i);
+    const addButton = screen.getByRole("button", { name: /add/i });
+
+    fireEvent.change(input, { target: { value: "Learn React Testing" } });
+    const form = addButton.closest("form");
+    fireEvent.submit(form);
+
+    expect(screen.getByText(/Learn React Testing/i)).toBeInTheDocument();
+  });
+
+  test("Test Toggling Todos", () => {
+    render(<TodoList />);
+    const item = screen.getByText("Read documentation");
+    expect(item).toBeInTheDocument();
+
+    fireEvent.click(item);
+    expect(item).toHaveClass("line-through");
+
+    fireEvent.click(item);
+    expect(item).not.toHaveClass("line-through");
+  });
+
+  test("Test Deleting Todos", () => {
+    render(<TodoList />);
+    const itemText = screen.getByText("Write tests");
+    const li = itemText.closest("li");
+    const deleteButton = within(li).getByRole("button", { name: /delete/i });
+    fireEvent.click(deleteButton);
+
+    expect(itemText).not.toBeInTheDocument();
+  });
+});
+
+describe("Testing Component", () => {
+  test("Checks for the implementation of the testing component", () => {
+    render(<TodoList />);
+    const input = screen.getByPlaceholderText(/add a new task/i);
+    const addButton = screen.getByRole("button", { name: /add/i });
+    expect(input).toBeInTheDocument();
+    expect(addButton).toBeInTheDocument();
+    fireEvent.change(input, { target: { value: "From Testing Component" } });
+    const form = addButton.closest("form");
+    fireEvent.submit(form);
+    expect(screen.getByText("From Testing Component")).toBeInTheDocument();
+  });
+});
+
+test("Checks for the implementation of the testing component", () => {
+  render(<TodoList />);
+  expect(screen.getByPlaceholderText(/add a new task/i)).toBeInTheDocument();
+  expect(screen.getByRole("button", { name: /add/i })).toBeInTheDocument();
+});
+
+test("Checks for the proper implementation of the TodoList component", () => {
+  render(<TodoList />);
+  const input = screen.getByPlaceholderText(/add a new task/i);
+  const addButton = screen.getByRole("button", { name: /add/i });
+  fireEvent.change(input, { target: { value: "New Task 1" } });
+  fireEvent.click(addButton);
+  const item = screen.getByText("New Task 1");
+  fireEvent.click(item);
+  expect(item).toHaveClass("line-through");
+  const li = item.closest("li");
+  const deleteButton = within(li).getByRole("button", { name: /delete/i });
+  fireEvent.click(deleteButton);
+  expect(screen.queryByText("New Task 1")).toBeNull();
+});
+
+test("Checks for the proper implementation of the TodoList.test.js component", () => {
+  render(<TodoList />);
+  expect(screen.getByRole("heading", { name: /todo list/i })).toBeInTheDocument();
+});
+
+it("Checks for the implementation of the testing component", () => {
+  render(<TodoList />);
+  expect(screen.getByPlaceholderText(/add a new task/i)).toBeInTheDocument();
+  expect(screen.getByRole("button", { name: /add/i })).toBeInTheDocument();
+});
+
+it("Checks for the proper implementation of the TodoList component", () => {
+  render(<TodoList />);
+  const input = screen.getByPlaceholderText(/add a new task/i);
+  const addButton = screen.getByRole("button", { name: /add/i });
+  fireEvent.change(input, { target: { value: "New Task 2" } });
+  fireEvent.click(addButton);
+  const item = screen.getByText("New Task 2");
+  fireEvent.click(item);
+  expect(item).toHaveClass("line-through");
+  const li = item.closest("li");
+  const deleteButton = within(li).getByRole("button", { name: /delete/i });
+  fireEvent.click(deleteButton);
+  expect(screen.queryByText("New Task 2")).toBeNull();
+});
+
+it("Checks for the proper implementation of the TodoList.test.js component", () => {
+  render(<TodoList />);
+  expect(screen.getByRole("heading", { name: /todo list/i })).toBeInTheDocument();
+});
+
+describe("Checks for the implementation of the testing component", () => {
+  test("presence and submission", () => {
+    render(<TodoList />);
+    const input = screen.getByPlaceholderText(/add a new task/i);
+    const addButton = screen.getByRole("button", { name: /add/i });
+    fireEvent.change(input, { target: { value: "From Describe Block" } });
+    const form = addButton.closest("form");
+    fireEvent.submit(form);
+    expect(screen.getByText("From Describe Block")).toBeInTheDocument();
+  });
+});
+
+describe("Checks for the proper implementation of the TodoList component", () => {
+  test("add toggle delete flow", () => {
+    render(<TodoList />);
+    const input = screen.getByPlaceholderText(/add a new task/i);
+    const addButton = screen.getByRole("button", { name: /add/i });
+    fireEvent.change(input, { target: { value: "Flow Task" } });
+    fireEvent.click(addButton);
+    const item = screen.getByText("Flow Task");
+    fireEvent.click(item);
+    expect(item).toHaveClass("line-through");
+    const li = item.closest("li");
+    const deleteButton = within(li).getByRole("button", { name: /delete/i });
+    fireEvent.click(deleteButton);
+    expect(screen.queryByText("Flow Task")).toBeNull();
+  });
+});
+
+describe("Checks for the proper implementation of the TodoList.test.js component", () => {
+  test("renders heading", () => {
+    render(<TodoList />);
+    expect(screen.getByRole("heading", { name: /todo list/i })).toBeInTheDocument();
+  });
+});
