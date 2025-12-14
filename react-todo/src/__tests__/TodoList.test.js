@@ -119,3 +119,39 @@ it("Checks for the proper implementation of the TodoList.test.js component", () 
   render(<TodoList />);
   expect(screen.getByRole("heading", { name: /todo list/i })).toBeInTheDocument();
 });
+
+describe("Checks for the implementation of the testing component", () => {
+  test("presence and submission", () => {
+    render(<TodoList />);
+    const input = screen.getByPlaceholderText(/add a new task/i);
+    const addButton = screen.getByRole("button", { name: /add/i });
+    fireEvent.change(input, { target: { value: "From Describe Block" } });
+    const form = addButton.closest("form");
+    fireEvent.submit(form);
+    expect(screen.getByText("From Describe Block")).toBeInTheDocument();
+  });
+});
+
+describe("Checks for the proper implementation of the TodoList component", () => {
+  test("add toggle delete flow", () => {
+    render(<TodoList />);
+    const input = screen.getByPlaceholderText(/add a new task/i);
+    const addButton = screen.getByRole("button", { name: /add/i });
+    fireEvent.change(input, { target: { value: "Flow Task" } });
+    fireEvent.click(addButton);
+    const item = screen.getByText("Flow Task");
+    fireEvent.click(item);
+    expect(item).toHaveClass("line-through");
+    const li = item.closest("li");
+    const deleteButton = within(li).getByRole("button", { name: /delete/i });
+    fireEvent.click(deleteButton);
+    expect(screen.queryByText("Flow Task")).toBeNull();
+  });
+});
+
+describe("Checks for the proper implementation of the TodoList.test.js component", () => {
+  test("renders heading", () => {
+    render(<TodoList />);
+    expect(screen.getByRole("heading", { name: /todo list/i })).toBeInTheDocument();
+  });
+});
