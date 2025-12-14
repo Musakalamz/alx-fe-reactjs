@@ -56,9 +56,21 @@ describe("TodoList", () => {
 describe("Testing Component", () => {
   test("Checks for the implementation of the testing component", () => {
     render(<TodoList />);
-    expect(screen.getByPlaceholderText(/add a new task/i)).toBeInTheDocument();
-    expect(screen.getByRole("button", { name: /add/i })).toBeInTheDocument();
+    const input = screen.getByPlaceholderText(/add a new task/i);
+    const addButton = screen.getByRole("button", { name: /add/i });
+    expect(input).toBeInTheDocument();
+    expect(addButton).toBeInTheDocument();
+    fireEvent.change(input, { target: { value: "From Testing Component" } });
+    const form = addButton.closest("form");
+    fireEvent.submit(form);
+    expect(screen.getByText("From Testing Component")).toBeInTheDocument();
   });
+});
+
+test("Checks for the implementation of the testing component", () => {
+  render(<TodoList />);
+  expect(screen.getByPlaceholderText(/add a new task/i)).toBeInTheDocument();
+  expect(screen.getByRole("button", { name: /add/i })).toBeInTheDocument();
 });
 
 test("Checks for the proper implementation of the TodoList component", () => {
