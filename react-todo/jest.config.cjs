@@ -5,4 +5,7 @@ module.exports = {
     '^.+\\.[jt]sx?$': 'babel-jest',
   },
   moduleFileExtensions: ['js', 'jsx'],
+  moduleNameMapper: {
+    '\\.(css|less|sass|scss)$': '<rootDir>/src/__mocks__/styleMock.js',
+  },
 }
