@@ -1,5 +1,5 @@
 import { render, screen, fireEvent, within } from "@testing-library/react";
-import TodoList from "../components/TodoList.jsx";
+import TodoList from "../components/TodoList.js";
 
 describe("TodoList", () => {
   test("renders with initial demo todos", () => {
@@ -12,13 +12,20 @@ describe("TodoList", () => {
     expect(screen.getByText(/Ship features/i)).toBeInTheDocument();
   });
 
-  test("adds a new todo", () => {
+  test("renders AddTodoForm controls", () => {
+    render(<TodoList />);
+    expect(screen.getByPlaceholderText(/add a new task/i)).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /add/i })).toBeInTheDocument();
+  });
+
+  test("adds a new todo via form submission", () => {
     render(<TodoList />);
     const input = screen.getByPlaceholderText(/add a new task/i);
     const addButton = screen.getByRole("button", { name: /add/i });
 
     fireEvent.change(input, { target: { value: "Learn React Testing" } });
-    fireEvent.click(addButton);
+    const form = addButton.closest("form");
+    fireEvent.submit(form);
 
     expect(screen.getByText(/Learn React Testing/i)).toBeInTheDocument();
   });
