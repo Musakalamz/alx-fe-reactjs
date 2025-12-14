@@ -1,66 +1,94 @@
-import { useState } from "react";
-import AddTodoForm from "./AddTodoForm.jsx";
+import { useState } from 'react';
 
-function createTodo(text) {
-  const id =
-    typeof crypto !== "undefined" && crypto.randomUUID
-      ? crypto.randomUUID()
-      : String(Date.now() + Math.random());
-  return { id, text, completed: false };
-}
+const TodoList = () => {
+  const [todos, setTodos] = useState([
+    { id: 1, text: 'Learn React', completed: false },
+    { id: 2, text: 'Build a Todo App', completed: false },
+    { id: 3, text: 'Master React Testing', completed: false },
+  ]);
 
-const initialTodos = [
-  "Read documentation",
-  "Write tests",
-  "Ship features",
-];
+  const [inputValue, setInputValue] = useState('');
 
-export default function TodoList() {
-  const [todos, setTodos] = useState(initialTodos.map((t) => createTodo(t)));
+  // Add new todo
+  const addTodo = (e) => {
+    e.preventDefault();
+    if (inputValue.trim() === '') return;
 
-  const add = (text) => setTodos((prev) => [createTodo(text), ...prev]);
-  const toggle = (id) =>
-    setTodos((prev) =>
-      prev.map((t) => (t.id === id ? { ...t, completed: !t.completed } : t))
+    const newTodo = {
+      id: Date.now(),
+      text: inputValue,
+      completed: false,
+    };
+
+    setTodos([...todos, newTodo]);
+    setInputValue('');
+  };
+
+  // Toggle todo completion status
+  const toggleTodo = (id) => {
+    setTodos(
+      todos.map((todo) =>
+        todo.id === id ? { ...todo, completed: !todo.completed } : todo
+      )
     );
-  const remove = (id) => setTodos((prev) => prev.filter((t) => t.id !== id));
+  };
+
+  // Delete todo
+  const deleteTodo = (id) => {
+    setTodos(todos.filter((todo) => todo.id !== id));
+  };
 
   return (
-    <div className="mx-auto max-w-xl rounded-xl border border-gray-200 bg-white/90 p-6 shadow-sm dark:border-gray-700 dark:bg-gray-900">
-      <h1 className="mb-4 text-2xl font-semibold text-gray-900 dark:text-gray-100">
-        Todo List
-      </h1>
-      <AddTodoForm onAdd={add} />
-      <ul className="mt-6 space-y-2" aria-label="todos">
-        {todos.map((t) => (
+    <div className="todo-container">
+      <h1>My Todo List</h1>
+
+      {/* Add Todo Form */}
+      <form onSubmit={addTodo} className="add-todo-form">
+        <input
+          type="text"
+          value={inputValue}
+          onChange={(e) => setInputValue(e.target.value)}
+          placeholder="Add a new todo..."
+          className="todo-input"
+        />
+        <button type="submit" className="add-button">
+          Add Todo
+        </button>
+      </form>
+
+      {/* Todo List */}
+      <ul className="todo-list">
+        {todos.map((todo) => (
           <li
-            key={t.id}
-            className="flex items-center justify-between rounded-md border border-gray-200 bg-white px-3 py-2 text-sm shadow-sm dark:border-gray-700 dark:bg-gray-800"
+            key={todo.id}
+            className={`todo-item ${todo.completed ? 'completed' : ''}`}
           >
-            <button
-              onClick={() => toggle(t.id)}
-              className={`flex-1 text-left ${
-                t.completed
-                  ? "text-gray-400 line-through"
-                  : "text-gray-900 dark:text-gray-100"
-              }`}
+            <span
+              onClick={() => toggleTodo(todo.id)}
+              className="todo-text"
+              style={{
+                textDecoration: todo.completed ? 'line-through' : 'none',
+                cursor: 'pointer',
+              }}
             >
-              {t.text}
-            </button>
+              {todo.text}
+            </span>
             <button
-              onClick={() => remove(t.id)}
-              className="ml-3 rounded-md bg-rose-600 px-3 py-1.5 text-xs font-medium text-white hover:bg-rose-700"
+              onClick={() => deleteTodo(todo.id)}
+              className="delete-button"
             >
               Delete
             </button>
           </li>
         ))}
       </ul>
+
+      {/* Empty state */}
       {todos.length === 0 && (
-        <p className="mt-4 text-sm text-gray-500 dark:text-gray-400">
-          No todos yet
-        </p>
+        <p className="empty-state">No todos yet. Add one above!</p>
       )}
     </div>
   );
-}
+};
+
+export default TodoList;

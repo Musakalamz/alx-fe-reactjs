@@ -1,98 +1,16 @@
-# React Todo List — Implemented and Tested
+# React + Vite
 
-A fully functional Todo List built with React and styled using TailwindCSS, with comprehensive tests written in Jest and React Testing Library.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## Features
+Currently, two official plugins are available:
 
-- Add new todos via a form
-- Toggle todos between completed and not completed
-- Delete individual todos
-- Initial demo todos rendered on load
-- TailwindCSS styling for a clean, accessible UI
-- Unit tests for render, add, toggle, and delete behaviors
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## Tech Stack
+## React Compiler
 
-- React (Vite)
-- TailwindCSS
-- Jest + React Testing Library
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
 
-## Prerequisites
+## Expanding the ESLint configuration
 
-- Node.js 18+ recommended
-- npm
-
-## Installation
-
-```bash
-npm install
-```
-
-## Available Scripts
-
-- `npm run dev` — start local development server
-- `npm run build` — build for production
-- `npm run preview` — preview production build
-- `npm run lint` — run ESLint
-- `npm test` — run unit tests with Jest
-
-## Testing
-
-The project is configured to use Jest with a `jsdom` environment and Babel transforms for JSX.
-
-Structure:
-
-- Config: `jest.config.cjs`, `babel.config.cjs`, `src/setupTests.js`
-- Tests: `src/__tests__/TodoList.test.jsx`
-
-Run tests:
-
-```bash
-npm test
-```
-
-## TailwindCSS
-
-Tailwind is configured via `tailwind.config.js` and `postcss.config.js`. The directives are included in `src/index.css`.
-
-Content paths:
-
-- `index.html`
-- `src/**/*.{js,jsx,ts,tsx}`
-
-## Component Structure
-
-- `src/components/AddTodoForm.jsx` — controlled input and submit button
-- `src/components/TodoList.jsx` — manages state and renders list
-
-Integrate in `src/App.jsx` to display the Todo List on the page.
-
-## Project Structure
-
-```
-react-todo/
-  src/
-    components/
-      AddTodoForm.jsx
-      TodoList.jsx
-    __tests__/
-      TodoList.test.jsx
-    setupTests.js
-    index.css
-    App.jsx
-    main.jsx
-  tailwind.config.js
-  postcss.config.js
-  jest.config.cjs
-  babel.config.cjs
-  package.json
-```
-
-## Notes
-
-- Tests rely on the `jsdom` environment; ensure dev dependencies are installed.
-- IDs use `crypto.randomUUID()` when available, with a runtime fallback for compatibility in tests.
-
-## License
-
-MIT
+If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.

@@ -26,14 +26,4 @@ export default defineConfig([
       'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
     },
   },
-  {
-    files: ['**/__tests__/**/*.{js,jsx}', '**/*.test.{js,jsx}'],
-    languageOptions: {
-      ecmaVersion: 2020,
-      globals: {
-        ...globals.browser,
-        ...globals.jest,
-      },
-    },
-  },
 ])
