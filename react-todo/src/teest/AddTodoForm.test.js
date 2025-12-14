@@ -1,6 +1,6 @@
 import "@testing-library/jest-dom";
 import { render, screen, fireEvent } from "@testing-library/react";
-import AddTodoForm from "./components/AddTodoForm.js";
+import AddTodoForm from "../components/AddTodoForm.js";
 
 describe("AddTodoForm", () => {
   test("renders input and Add button", () => {

@@ -1,6 +1,6 @@
 import "@testing-library/jest-dom";
 import { render, screen, fireEvent, within } from "@testing-library/react";
-import App from "./App.jsx";
+import App from "../App.jsx";
 
 describe("Todo App Flow", () => {
   test("renders heading and initial demo todos", () => {
