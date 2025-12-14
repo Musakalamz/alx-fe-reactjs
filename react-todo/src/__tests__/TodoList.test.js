@@ -3,7 +3,7 @@ import { render, screen, fireEvent, within } from "@testing-library/react";
 import TodoList from "../components/TodoList.js";
 
 describe("TodoList", () => {
-  test("Initial Render Test", () => {
+  test("Write Initial Render Test", () => {
     render(<TodoList />);
     expect(
       screen.getByRole("heading", { name: /todo list/i })
@@ -50,5 +50,13 @@ describe("TodoList", () => {
     fireEvent.click(deleteButton);
 
     expect(itemText).not.toBeInTheDocument();
+  });
+});
+
+describe("Testing Component", () => {
+  test("Checks for the implementation of the testing component", () => {
+    render(<TodoList />);
+    expect(screen.getByPlaceholderText(/add a new task/i)).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /add/i })).toBeInTheDocument();
   });
 });
